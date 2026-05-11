@@ -146,6 +146,10 @@ export const Posts: CollectionConfig = {
     useAsTitle: 'title',
     defaultColumns: ['title', 'status', 'publishedAt', 'tags'],
     description: 'Journal posts for the Loch Monster Electric blog.',
+    livePreview: {
+      url: ({ data }) =>
+        `${process.env.LME_SITE_URL || 'http://localhost:3000'}/preview/post/${data?.slug ?? ''}`,
+    },
   },
   access: {
     read: () => true,

@@ -7,6 +7,10 @@ export const Services: CollectionConfig = {
     useAsTitle: 'title',
     defaultColumns: ['title', 'parentCategory', 'parentHub', 'slug'],
     description: 'Individual service pages (panel upgrades, EV chargers, etc.)',
+    livePreview: {
+      url: ({ data }) =>
+        `${process.env.LME_SITE_URL || 'http://localhost:3000'}/preview/service/${data?.slug ?? ''}`,
+    },
   },
   access: { read: () => true },
   hooks: {

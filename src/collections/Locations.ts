@@ -7,6 +7,10 @@ export const Locations: CollectionConfig = {
     useAsTitle: 'name',
     defaultColumns: ['name', 'state', 'county', 'slug'],
     description: 'Service area cities. Each generates a /service-areas/[slug] page.',
+    livePreview: {
+      url: ({ data }) =>
+        `${process.env.LME_SITE_URL || 'http://localhost:3000'}/preview/location/${data?.slug ?? ''}`,
+    },
   },
   access: { read: () => true },
   hooks: {
