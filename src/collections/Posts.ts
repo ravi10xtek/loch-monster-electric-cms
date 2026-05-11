@@ -68,12 +68,31 @@ const LinkHTMLConverter: HTMLConverter<any> = {
   },
 }
 
+// Upload / inline image nodes — outputs <img> with optional <figure> wrapper
+const UploadHTMLConverter: HTMLConverter<any> = {
+  nodeTypes: ['upload'],
+  converter: async (args) => {
+    const node = args.node
+    // value is the populated media document (depth=1 resolves relations)
+    const media = node.value
+    if (!media?.url) return ''
+    const src = media.url.startsWith('http') ? media.url : `${process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3001'}${media.url}`
+    const alt = media.alt || media.filename || ''
+    const caption = node.fields?.caption || media.caption || ''
+    if (caption) {
+      return `<figure class="jp-inline-img"><img src="${src}" alt="${alt}" loading="lazy" /><figcaption>${caption}</figcaption></figure>`
+    }
+    return `<img src="${src}" alt="${alt}" loading="lazy" class="jp-inline-img" />`
+  },
+}
+
 const allConverters: HTMLConverter<any>[] = [
   ...defaultHTMLConverters,
   HeadingHTMLConverter,
   ListHTMLConverter,
   ListItemHTMLConverter,
   LinkHTMLConverter,
+  UploadHTMLConverter,
 ]
 
 // ── Collection ────────────────────────────────────────────────────────────

@@ -1,5 +1,5 @@
 import { postgresAdapter } from '@payloadcms/db-postgres'
-import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import { lexicalEditor, UploadFeature } from '@payloadcms/richtext-lexical'
 import path from 'path'
 import { buildConfig } from 'payload'
 import sharp from 'sharp'
@@ -30,7 +30,20 @@ export default buildConfig({
 
   globals: [],
 
-  editor: lexicalEditor({}),
+  editor: lexicalEditor({
+    features: ({ defaultFeatures }) => [
+      ...defaultFeatures,
+      UploadFeature({
+        collections: {
+          media: {
+            fields: [
+              { name: 'caption', type: 'text', label: 'Caption (optional)' },
+            ],
+          },
+        },
+      }),
+    ],
+  }),
 
   secret: process.env.PAYLOAD_SECRET || 'lme-cms-dev-secret',
 
