@@ -240,6 +240,15 @@ export const Posts: CollectionConfig = {
 
             // ── FAQ ──────────────────────────────────────
             {
+              name: 'faqTitle',
+              type: 'text',
+              label: 'FAQ Section Title',
+              defaultValue: 'Frequently Asked Questions',
+              admin: {
+                description: 'Heading shown above the FAQ accordion. Defaults to "Frequently Asked Questions".',
+              },
+            },
+            {
               name: 'faq',
               type: 'array',
               label: 'FAQ',
