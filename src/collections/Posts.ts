@@ -79,9 +79,13 @@ const UploadHTMLConverter: HTMLConverter<any> = {
 
     let media: any = node.value
 
-    // If the client only sent an ID (or a stub without url), fetch the full doc
+    console.log('[UploadHTMLConverter] node.value:', JSON.stringify(media)?.slice(0, 120))
+
+    // node.value is always a plain ID string in Payload v3 Lexical (upload node v3)
+    // Fall back to a DB lookup so we can get the URL
     if (!media?.url && req?.payload) {
       const mediaId = typeof media === 'string' ? media : media?.id
+      console.log('[UploadHTMLConverter] fetching media by id:', mediaId)
       if (mediaId) {
         try {
           media = await req.payload.findByID({
@@ -90,13 +94,18 @@ const UploadHTMLConverter: HTMLConverter<any> = {
             depth: 0,
             overrideAccess: true,
           })
-        } catch {
+          console.log('[UploadHTMLConverter] fetched media url:', media?.url)
+        } catch (err) {
+          console.error('[UploadHTMLConverter] findByID failed:', err)
           return ''
         }
       }
     }
 
-    if (!media?.url) return ''
+    if (!media?.url) {
+      console.warn('[UploadHTMLConverter] no URL resolved, skipping image')
+      return ''
+    }
 
     const cmsBase = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3001'
     const src = media.url.startsWith('http') ? media.url : `${cmsBase}${media.url}`
