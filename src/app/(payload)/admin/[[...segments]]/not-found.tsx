@@ -1,0 +1,8 @@
+import { NotFoundPage } from '@payloadcms/next/views'
+import config from '@payload-config'
+
+export const dynamic = 'force-dynamic'
+
+export default function NotFound() {
+  return NotFoundPage({ config })
+}
