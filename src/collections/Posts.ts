@@ -84,7 +84,8 @@ const UploadHTMLConverter: HTMLConverter<any> = {
     // node.value is always a plain ID string in Payload v3 Lexical (upload node v3)
     // Fall back to a DB lookup so we can get the URL
     if (!media?.url && req?.payload) {
-      const mediaId = typeof media === 'string' ? media : media?.id
+      // value can be a string ID, numeric ID, or { id } object
+      const mediaId = typeof media === 'object' ? media?.id : (media != null ? String(media) : undefined)
       console.log('[UploadHTMLConverter] fetching media by id:', mediaId)
       if (mediaId) {
         try {
