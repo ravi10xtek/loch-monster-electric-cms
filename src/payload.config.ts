@@ -9,6 +9,8 @@ import { Posts } from './collections/Posts'
 import { Media } from './collections/Media'
 import { PageSEO } from './collections/PageSEO'
 import { Users } from './collections/Users'
+import { Locations } from './collections/Locations'
+import { Services } from './collections/Services'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -26,7 +28,7 @@ export default buildConfig({
     },
   },
 
-  collections: [Posts, Media, PageSEO, Users],
+  collections: [Posts, Media, PageSEO, Users, Locations, Services],
 
   globals: [],
 
