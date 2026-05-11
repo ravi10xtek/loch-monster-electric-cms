@@ -237,6 +237,32 @@ export const Posts: CollectionConfig = {
                   '⚙️ Auto-generated from Body on save. Read by the LME website — do not edit manually.',
               },
             },
+
+            // ── FAQ ──────────────────────────────────────
+            {
+              name: 'faq',
+              type: 'array',
+              label: 'FAQ',
+              admin: {
+                description:
+                  'Accordion FAQ shown below the article body. Leave empty to hide the section.',
+                initCollapsed: true,
+              },
+              fields: [
+                {
+                  name: 'question',
+                  type: 'text',
+                  required: true,
+                  label: 'Question',
+                },
+                {
+                  name: 'answer',
+                  type: 'textarea',
+                  required: true,
+                  label: 'Answer',
+                },
+              ],
+            },
           ],
         },
 
