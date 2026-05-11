@@ -13,6 +13,8 @@ const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 export default buildConfig({
+  serverURL: process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3001',
+
   admin: {
     user: Users.slug,
     importMap: {
@@ -25,6 +27,8 @@ export default buildConfig({
 
   collections: [Posts, Media, PageSEO, Users],
 
+  globals: [],
+
   editor: lexicalEditor({}),
 
   secret: process.env.PAYLOAD_SECRET || 'lme-cms-dev-secret',
@@ -36,6 +40,7 @@ export default buildConfig({
   db: postgresAdapter({
     pool: {
       connectionString: process.env.DATABASE_URI || '',
+      max: 10,
     },
   }),
 
