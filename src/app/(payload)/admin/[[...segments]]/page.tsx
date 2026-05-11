@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { RootPage, generatePageMetadata } from '@payloadcms/next/views'
 import config from '@payload-config'
+import { importMap } from '../importMap'
 
 export const dynamic = 'force-dynamic'
 export const revalidate = 0
@@ -15,5 +16,5 @@ export async function generateMetadata({ params, searchParams }: Args): Promise<
 }
 
 export default function Page({ params, searchParams }: Args) {
-  return RootPage({ config, params, searchParams })
+  return RootPage({ config, importMap, params, searchParams })
 }
