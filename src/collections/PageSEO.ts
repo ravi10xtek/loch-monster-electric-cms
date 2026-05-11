@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { revalidate } from '../lib/revalidate'
 
 // One record per static page — editors can update meta without a code deploy
 
@@ -11,6 +12,14 @@ export const PageSEO: CollectionConfig = {
   },
   access: {
     read: () => true,
+  },
+  hooks: {
+    afterChange: [
+      async ({ doc }) => {
+        // Revalidate the specific page whose SEO was updated
+        await revalidate({ collection: 'page-seo', slug: doc.slug })
+      },
+    ],
   },
   fields: [
     {

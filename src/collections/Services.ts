@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { revalidate } from '../lib/revalidate'
 
 export const Services: CollectionConfig = {
   slug: 'services',
@@ -8,6 +9,14 @@ export const Services: CollectionConfig = {
     description: 'Individual service pages (panel upgrades, EV chargers, etc.)',
   },
   access: { read: () => true },
+  hooks: {
+    afterChange: [
+      async ({ doc }) => {
+        // Revalidate by tag — services live at nested paths we don't track here
+        await revalidate({ collection: 'services', slug: doc.slug })
+      },
+    ],
+  },
   fields: [
     {
       type: 'tabs',

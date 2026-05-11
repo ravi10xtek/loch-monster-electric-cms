@@ -5,6 +5,7 @@ import {
   defaultHTMLConverters,
 } from '@payloadcms/richtext-lexical'
 import type { HTMLConverter } from '@payloadcms/richtext-lexical'
+import { revalidate } from '../lib/revalidate'
 
 // Mirrors the structure in lme-site/app/data/journal.js
 // so migration is a direct seed from the static file.
@@ -173,6 +174,12 @@ export const Posts: CollectionConfig = {
           }
         }
         return data
+      },
+    ],
+    afterChange: [
+      async ({ doc }) => {
+        // Bust the ISR cache for this post and the journal index
+        await revalidate({ collection: 'posts', slug: doc.slug })
       },
     ],
   },

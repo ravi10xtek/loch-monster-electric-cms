@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { revalidate } from '../lib/revalidate'
 
 export const Locations: CollectionConfig = {
   slug: 'locations',
@@ -8,6 +9,13 @@ export const Locations: CollectionConfig = {
     description: 'Service area cities. Each generates a /service-areas/[slug] page.',
   },
   access: { read: () => true },
+  hooks: {
+    afterChange: [
+      async ({ doc }) => {
+        await revalidate({ collection: 'locations', slug: doc.slug })
+      },
+    ],
+  },
   fields: [
     {
       type: 'tabs',
