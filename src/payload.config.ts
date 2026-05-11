@@ -11,6 +11,7 @@ import { PageSEO } from './collections/PageSEO'
 import { Users } from './collections/Users'
 import { Locations } from './collections/Locations'
 import { Services } from './collections/Services'
+import { Pages } from './collections/Pages'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -26,9 +27,16 @@ export default buildConfig({
     meta: {
       titleSuffix: '— LME CMS',
     },
+    livePreview: {
+      breakpoints: [
+        { label: 'Mobile', name: 'mobile', width: 375, height: 667 },
+        { label: 'Tablet', name: 'tablet', width: 768, height: 1024 },
+        { label: 'Desktop', name: 'desktop', width: 1440, height: 900 },
+      ],
+    },
   },
 
-  collections: [Posts, Media, PageSEO, Users, Locations, Services],
+  collections: [Posts, Media, PageSEO, Users, Locations, Services, Pages],
 
   globals: [],
 

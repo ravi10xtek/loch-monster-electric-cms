@@ -12,7 +12,7 @@ const SITE_URL = process.env.LME_SITE_URL || 'http://localhost:3000'
 const SECRET = process.env.LME_REVALIDATE_SECRET || ''
 
 interface RevalidatePayload {
-  collection: 'posts' | 'locations' | 'services' | 'page-seo'
+  collection: 'posts' | 'locations' | 'services' | 'page-seo' | 'pages'
   slug?: string
 }
 
