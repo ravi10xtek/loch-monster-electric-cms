@@ -2,6 +2,7 @@ import { postgresAdapter } from '@payloadcms/db-postgres'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import path from 'path'
 import { buildConfig } from 'payload'
+import sharp from 'sharp'
 import { fileURLToPath } from 'url'
 
 import { Posts } from './collections/Posts'
@@ -44,5 +45,5 @@ export default buildConfig({
     },
   }),
 
-  sharp: true,
+  sharp,
 })
