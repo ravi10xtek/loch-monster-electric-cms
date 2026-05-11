@@ -1,5 +1,10 @@
 import type { CollectionConfig } from 'payload'
-import { convertLexicalToHTML, defaultHTMLConverters } from '@payloadcms/richtext-lexical'
+import {
+  convertLexicalToHTML,
+  convertLexicalNodesToHTML,
+  defaultHTMLConverters,
+} from '@payloadcms/richtext-lexical'
+import type { HTMLConverter } from '@payloadcms/richtext-lexical'
 
 // Mirrors the structure in lme-site/app/data/journal.js
 // so migration is a direct seed from the static file.
@@ -7,6 +12,71 @@ import { convertLexicalToHTML, defaultHTMLConverters } from '@payloadcms/richtex
 // bodyHtml is auto-generated from body on every save — the LME site
 // reads this field so it can use dangerouslySetInnerHTML without
 // pulling in the Lexical runtime.
+
+// ── Extra HTML converters not included in defaultHTMLConverters ───────────
+
+// Shared helper — renders a node's children array to an HTML string
+async function childrenToHTML(args: any): Promise<string> {
+  return convertLexicalNodesToHTML({
+    converters: args.converters,
+    currentDepth: args.currentDepth,
+    depth: args.depth,
+    draft: args.draft,
+    lexicalNodes: args.node.children ?? [],
+    overrideAccess: args.overrideAccess,
+    parent: { ...args.node, parent: args.parent },
+    req: args.req,
+    showHiddenFields: args.showHiddenFields,
+  })
+}
+
+const HeadingHTMLConverter: HTMLConverter<any> = {
+  nodeTypes: ['heading'],
+  converter: async (args) => {
+    const tag = args.node.tag || 'h2'
+    const inner = await childrenToHTML(args)
+    return `<${tag}>${inner}</${tag}>`
+  },
+}
+
+const ListHTMLConverter: HTMLConverter<any> = {
+  nodeTypes: ['list'],
+  converter: async (args) => {
+    const tag = args.node.tag || 'ul'
+    const inner = await childrenToHTML(args)
+    return `<${tag}>${inner}</${tag}>`
+  },
+}
+
+const ListItemHTMLConverter: HTMLConverter<any> = {
+  nodeTypes: ['listitem'],
+  converter: async (args) => {
+    const inner = await childrenToHTML(args)
+    return `<li>${inner}</li>`
+  },
+}
+
+const LinkHTMLConverter: HTMLConverter<any> = {
+  nodeTypes: ['link'],
+  converter: async (args) => {
+    const url = args.node.fields?.url || args.node.url || '#'
+    const newTab = args.node.fields?.newTab
+    const rel = newTab ? ' rel="noopener noreferrer"' : ''
+    const target = newTab ? ' target="_blank"' : ''
+    const inner = await childrenToHTML(args)
+    return `<a href="${url}"${target}${rel}>${inner}</a>`
+  },
+}
+
+const allConverters: HTMLConverter<any>[] = [
+  ...defaultHTMLConverters,
+  HeadingHTMLConverter,
+  ListHTMLConverter,
+  ListItemHTMLConverter,
+  LinkHTMLConverter,
+]
+
+// ── Collection ────────────────────────────────────────────────────────────
 
 export const Posts: CollectionConfig = {
   slug: 'posts',
@@ -21,11 +91,17 @@ export const Posts: CollectionConfig = {
 
   hooks: {
     beforeChange: [
-      async ({ data }) => {
-        if (data.body) {
+      async ({ data, originalDoc, operation }) => {
+        // Only reconvert when body actually changed (or on first create).
+        // This lets the seed script PATCH bodyHtml without it being overwritten.
+        const bodyChanged =
+          operation === 'create' ||
+          JSON.stringify(data.body) !== JSON.stringify(originalDoc?.body)
+
+        if (bodyChanged && data.body) {
           try {
             data.bodyHtml = await convertLexicalToHTML({
-              converters: defaultHTMLConverters,
+              converters: allConverters,
               data: data.body,
             })
           } catch (err) {
