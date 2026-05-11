@@ -68,21 +68,61 @@ const LinkHTMLConverter: HTMLConverter<any> = {
   },
 }
 
-// Upload / inline image nodes — outputs <img> with optional <figure> wrapper
+// Upload / inline image nodes — outputs <img> with optional <figure> wrapper.
+// node.value may be a full media object (sent by the browser editor) or just
+// an ID string — we fall back to a DB fetch when the URL isn't present.
 const UploadHTMLConverter: HTMLConverter<any> = {
   nodeTypes: ['upload'],
   converter: async (args) => {
     const node = args.node
-    // value is the populated media document (depth=1 resolves relations)
-    const media = node.value
-    if (!media?.url) return ''
-    const src = media.url.startsWith('http') ? media.url : `${process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3001'}${media.url}`
-    const alt = media.alt || media.filename || ''
-    const caption = node.fields?.caption || media.caption || ''
-    if (caption) {
-      return `<figure class="jp-inline-img"><img src="${src}" alt="${alt}" loading="lazy" /><figcaption>${caption}</figcaption></figure>`
+    const req  = args.req
+
+    let media: any = node.value
+
+    // If the client only sent an ID (or a stub without url), fetch the full doc
+    if (!media?.url && req?.payload) {
+      const mediaId = typeof media === 'string' ? media : media?.id
+      if (mediaId) {
+        try {
+          media = await req.payload.findByID({
+            collection: 'media',
+            id: mediaId,
+            depth: 0,
+            overrideAccess: true,
+          })
+        } catch {
+          return ''
+        }
+      }
     }
-    return `<img src="${src}" alt="${alt}" loading="lazy" class="jp-inline-img" />`
+
+    if (!media?.url) return ''
+
+    const cmsBase = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3001'
+    const src = media.url.startsWith('http') ? media.url : `${cmsBase}${media.url}`
+    const alt = media.alt || media.filename || ''
+
+    // Editor-set fields (width, align, caption)
+    const widthPct = node.fields?.width  || '100'
+    const align    = node.fields?.align  || 'center'
+    const caption  = node.fields?.caption || media.caption || ''
+
+    // Build inline style from width + alignment
+    let style = `width:${widthPct}%;`
+    if (align === 'center') {
+      style += 'display:block;margin-left:auto;margin-right:auto;'
+    } else if (align === 'left') {
+      style += 'float:left;margin:0 1.5rem 1rem 0;'
+    } else if (align === 'right') {
+      style += 'float:right;margin:0 0 1rem 1.5rem;'
+    }
+
+    const img = `<img src="${src}" alt="${alt}" loading="lazy" style="${style}" class="jp-inline-img" />`
+
+    if (caption) {
+      return `<figure class="jp-inline-figure" style="${align === 'center' ? 'text-align:center;' : ''}">${img}<figcaption>${caption}</figcaption></figure>`
+    }
+    return img
   },
 }
 
@@ -110,7 +150,7 @@ export const Posts: CollectionConfig = {
 
   hooks: {
     beforeChange: [
-      async ({ data, originalDoc, operation }) => {
+      async ({ data, req, originalDoc, operation }) => {
         // Only reconvert when body actually changed (or on first create).
         // This lets the seed script PATCH bodyHtml without it being overwritten.
         const bodyChanged =
@@ -122,6 +162,9 @@ export const Posts: CollectionConfig = {
             data.bodyHtml = await convertLexicalToHTML({
               converters: allConverters,
               data: data.body,
+              req,
+              depth: 1,
+              overrideAccess: true,
             })
           } catch (err) {
             console.error('[Posts] Lexical → HTML conversion failed:', err)

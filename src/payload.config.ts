@@ -37,7 +37,34 @@ export default buildConfig({
         collections: {
           media: {
             fields: [
-              { name: 'caption', type: 'text', label: 'Caption (optional)' },
+              {
+                name: 'caption',
+                type: 'text',
+                label: 'Caption (optional)',
+              },
+              {
+                name: 'width',
+                type: 'select',
+                label: 'Width',
+                defaultValue: '100',
+                options: [
+                  { label: 'Full width (100%)', value: '100' },
+                  { label: 'Large (75%)',        value: '75'  },
+                  { label: 'Medium (50%)',        value: '50'  },
+                  { label: 'Small (25%)',         value: '25'  },
+                ],
+              },
+              {
+                name: 'align',
+                type: 'select',
+                label: 'Alignment',
+                defaultValue: 'center',
+                options: [
+                  { label: 'Centre',      value: 'center' },
+                  { label: 'Left (wrap)', value: 'left'   },
+                  { label: 'Right (wrap)', value: 'right' },
+                ],
+              },
             ],
           },
         },
