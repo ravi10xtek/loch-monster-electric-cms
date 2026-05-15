@@ -40,7 +40,10 @@ function getPoolConfig() {
   const needsSsl = Boolean(process.env.VERCEL || process.env.NODE_ENV === 'production')
 
   const base = {
-    max: process.env.VERCEL ? 1 : 10,
+    // @payloadcms/db-postgres holds one pool client permanently as an
+    // ECONNRESET sentinel and never releases it, so max must be > 1 or
+    // every real query waits forever and hits connectionTimeoutMillis.
+    max: process.env.VERCEL ? 5 : 10,
     idleTimeoutMillis: 30000,
     connectionTimeoutMillis: 10000,
     ...(needsSsl ? { ssl: supabaseSsl } : {}),
