@@ -20,7 +20,7 @@
     "@payloadcms/next": "3.0.0",
     "@payloadcms/richtext-lexical": "3.0.0",
     "graphql": "^16.8.1",
-    "next": "^16.2.6",
+    "next": "^15.3.4",
     "nodemailer": "^8.0.7",
     "payload": "3.0.0",
     "react": "19.1.0",
