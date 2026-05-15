@@ -47,6 +47,8 @@ function getDatabaseUri(): string {
 }
 
 const databaseUri = getDatabaseUri()
+const useSupabaseSsl =
+  databaseUri.includes('supabase.com') || process.env.NODE_ENV === 'production'
 
 export default buildConfig({
   serverURL: process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3001',
@@ -145,7 +147,7 @@ export default buildConfig({
       max: process.env.VERCEL ? 1 : 10,
       idleTimeoutMillis: 30000,
       connectionTimeoutMillis: 10000,
-      ssl: process.env.VERCEL ? { rejectUnauthorized: false } : undefined,
+      ssl: useSupabaseSsl ? { rejectUnauthorized: false } : undefined,
     },
   }),
 
