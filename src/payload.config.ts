@@ -29,6 +29,9 @@ import { SEOSettings } from './globals/SEOSettings'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
+const databaseUri =
+  process.env.DATABASE_URI || process.env.DATABASE_URL || process.env.POSTGRES_URL || ''
+
 export default buildConfig({
   serverURL: process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3001',
 
@@ -122,11 +125,11 @@ export default buildConfig({
 
   db: postgresAdapter({
     pool: {
-      connectionString: process.env.DATABASE_URI || '',
-      // Serverless: keep pool small to avoid exhausting Supabase connection limits
+      connectionString: databaseUri,
       max: process.env.VERCEL ? 1 : 10,
       idleTimeoutMillis: 30000,
       connectionTimeoutMillis: 10000,
+      ssl: process.env.VERCEL ? { rejectUnauthorized: false } : undefined,
     },
   }),
 
