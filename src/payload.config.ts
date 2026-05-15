@@ -29,8 +29,24 @@ import { SEOSettings } from './globals/SEOSettings'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
-const databaseUri =
-  process.env.DATABASE_URI || process.env.DATABASE_URL || process.env.POSTGRES_URL || ''
+function getDatabaseUri(): string {
+  const fromEnv =
+    process.env.DATABASE_URI || process.env.DATABASE_URL || process.env.POSTGRES_URL
+  if (fromEnv) return fromEnv
+
+  const password = process.env.DATABASE_PASSWORD
+  const ref = process.env.SUPABASE_PROJECT_REF || 'qvmccwbxnwacedtckfkp'
+  const host =
+    process.env.SUPABASE_POOLER_HOST || 'aws-1-us-east-1.pooler.supabase.com'
+
+  if (password) {
+    return `postgresql://postgres.${ref}:${encodeURIComponent(password)}@${host}:6543/postgres`
+  }
+
+  return ''
+}
+
+const databaseUri = getDatabaseUri()
 
 export default buildConfig({
   serverURL: process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3001',
