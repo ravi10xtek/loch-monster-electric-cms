@@ -4,15 +4,7 @@ import config from '@payload-config'
 
 export const dynamic = 'force-dynamic'
 
-/**
- * Opt-in DB health check for debugging deploys.
- * Set ENABLE_DB_HEALTH_CHECK=true in Vercel, hit /api/health, then remove the env var.
- */
 export async function GET() {
-  if (process.env.ENABLE_DB_HEALTH_CHECK !== 'true') {
-    return NextResponse.json({ ok: false, message: 'Disabled' }, { status: 404 })
-  }
-
   const hasUri = Boolean(
     process.env.DATABASE_URI || process.env.DATABASE_URL || process.env.POSTGRES_URL,
   )
@@ -23,12 +15,18 @@ export async function GET() {
     return NextResponse.json({
       ok: true,
       hasDatabaseUri: hasUri,
+      vercelEnv: process.env.VERCEL_ENV ?? null,
       usersTable: users.totalDocs >= 0,
     })
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err)
     return NextResponse.json(
-      { ok: false, hasDatabaseUri: hasUri, error: message },
+      {
+        ok: false,
+        hasDatabaseUri: hasUri,
+        vercelEnv: process.env.VERCEL_ENV ?? null,
+        error: message,
+      },
       { status: 500 },
     )
   }
