@@ -6,6 +6,7 @@ import { revalidate } from '../lib/revalidate'
 export const PageSEO: CollectionConfig = {
   slug: 'page-seo',
   admin: {
+    group: 'SEO & Settings',
     useAsTitle: 'slug',
     defaultColumns: ['slug', 'metaTitle'],
     description: 'SEO metadata for static pages (Home, About, Pricing, etc.).',

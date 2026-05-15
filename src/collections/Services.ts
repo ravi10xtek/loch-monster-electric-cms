@@ -4,6 +4,7 @@ import { revalidate } from '../lib/revalidate'
 export const Services: CollectionConfig = {
   slug: 'services',
   admin: {
+    group: 'Services',
     useAsTitle: 'title',
     defaultColumns: ['title', 'parentCategory', 'parentHub', 'slug'],
     description: 'Individual service pages (panel upgrades, EV chargers, etc.)',
@@ -90,6 +91,7 @@ export const Services: CollectionConfig = {
             },
             { name: 'heroTagline', type: 'text', label: 'Hero Tagline' },
             { name: 'heroBody', type: 'textarea', label: 'Hero Body' },
+            { name: 'heroImage', type: 'upload', relationTo: 'media', label: 'Hero Background Image' },
             // When Do You Need section
             {
               name: 'whenHeading',
@@ -112,6 +114,7 @@ export const Services: CollectionConfig = {
               label: 'When Section Fallback Color',
               admin: { description: 'Hex fallback, e.g. #1a1a1a' },
             },
+            { name: 'whenImage', type: 'upload', relationTo: 'media', label: 'When Section Photo' },
             {
               name: 'scenarios',
               type: 'array',

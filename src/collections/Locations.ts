@@ -4,6 +4,7 @@ import { revalidate } from '../lib/revalidate'
 export const Locations: CollectionConfig = {
   slug: 'locations',
   admin: {
+    group: 'Service Areas',
     useAsTitle: 'name',
     defaultColumns: ['name', 'state', 'county', 'slug'],
     description: 'Service area cities. Each generates a /service-areas/[slug] page.',
@@ -54,6 +55,8 @@ export const Locations: CollectionConfig = {
               required: true,
               admin: { description: 'City-specific paragraph shown on the location page.' },
             },
+            { name: 'heroImage', type: 'upload', relationTo: 'media', label: 'Hero Background Image' },
+            { name: 'cityImage', type: 'upload', relationTo: 'media', label: 'City Photo (shown in local section)' },
             {
               name: 'nearby',
               type: 'relationship',

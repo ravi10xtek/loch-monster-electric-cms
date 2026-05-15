@@ -143,6 +143,7 @@ const allConverters: HTMLConverter<any>[] = [
 export const Posts: CollectionConfig = {
   slug: 'posts',
   admin: {
+    group: 'Blog',
     useAsTitle: 'title',
     defaultColumns: ['title', 'status', 'publishedAt', 'tags'],
     description: 'Journal posts for the Loch Monster Electric blog.',

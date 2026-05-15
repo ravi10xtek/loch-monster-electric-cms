@@ -12,6 +12,19 @@ import { Users } from './collections/Users'
 import { Locations } from './collections/Locations'
 import { Services } from './collections/Services'
 import { Pages } from './collections/Pages'
+import { ContactSubmissions } from './collections/ContactSubmissions'
+import { FAQs } from './collections/FAQs'
+import { ServiceHubs } from './collections/ServiceHubs'
+import { CategoryHubs } from './collections/CategoryHubs'
+import { SEOAudits } from './collections/SEOAudits'
+import { Competitors } from './collections/Competitors'
+import { HomePage } from './globals/HomePage'
+import { AboutPage } from './globals/AboutPage'
+import { ContactPage } from './globals/ContactPage'
+import { PricingPage } from './globals/PricingPage'
+import { ServiceAreasPage } from './globals/ServiceAreasPage'
+import { SharedSections } from './globals/SharedSections'
+import { SEOSettings } from './globals/SEOSettings'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -21,13 +34,32 @@ export default buildConfig({
 
   admin: {
     user: Users.slug,
+    theme: 'dark',
     importMap: {
       baseDir: path.resolve(dirname),
     },
     meta: {
       titleSuffix: '— LME CMS',
     },
+    components: {
+      beforeDashboard: ['@/components/SEODashboard#SEODashboard'],
+    },
     livePreview: {
+      url: ({ globalConfig, collectionConfig, data }) => {
+        const site = process.env.LME_SITE_URL || 'http://localhost:3000'
+        if (globalConfig?.slug) {
+          return `${site}/preview/global/${globalConfig.slug}`
+        }
+        if (collectionConfig?.slug === 'service-hubs') {
+          return `${site}/preview/service-hub/${data?.slug}`
+        }
+        if (collectionConfig?.slug === 'category-hubs') {
+          return `${site}/preview/category-hub/${data?.slug}`
+        }
+        return site
+      },
+      globals: ['home-page', 'about-page', 'contact-page', 'pricing-page', 'service-areas-page', 'shared-sections'],
+      collections: ['service-hubs', 'category-hubs'],
       breakpoints: [
         { label: 'Mobile', name: 'mobile', width: 375, height: 667 },
         { label: 'Tablet', name: 'tablet', width: 768, height: 1024 },
@@ -36,9 +68,9 @@ export default buildConfig({
     },
   },
 
-  collections: [Posts, Media, PageSEO, Users, Locations, Services, Pages],
+  collections: [Posts, Media, PageSEO, Users, Locations, Services, Pages, ContactSubmissions, FAQs, ServiceHubs, CategoryHubs, SEOAudits, Competitors],
 
-  globals: [],
+  globals: [HomePage, AboutPage, ContactPage, PricingPage, ServiceAreasPage, SharedSections, SEOSettings],
 
   editor: lexicalEditor({
     features: ({ defaultFeatures }) => [
