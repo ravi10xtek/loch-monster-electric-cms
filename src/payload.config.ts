@@ -1,5 +1,6 @@
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { lexicalEditor, UploadFeature } from '@payloadcms/richtext-lexical'
+import { s3Storage } from '@payloadcms/storage-s3'
 import path from 'path'
 import { buildConfig } from 'payload'
 import sharp from 'sharp'
@@ -166,6 +167,25 @@ export default buildConfig({
   db: postgresAdapter({
     pool: getPoolConfig(),
   }),
+
+  plugins: [
+    s3Storage({
+      enabled: Boolean(process.env.SUPABASE_S3_ACCESS_KEY_ID),
+      collections: {
+        media: true,
+      },
+      bucket: process.env.SUPABASE_STORAGE_BUCKET || 'media',
+      config: {
+        endpoint: process.env.SUPABASE_S3_ENDPOINT || '',
+        region: process.env.SUPABASE_S3_REGION || 'us-east-1',
+        credentials: {
+          accessKeyId: process.env.SUPABASE_S3_ACCESS_KEY_ID || '',
+          secretAccessKey: process.env.SUPABASE_S3_SECRET_ACCESS_KEY || '',
+        },
+        forcePathStyle: true,
+      },
+    }),
+  ],
 
   sharp,
 })
