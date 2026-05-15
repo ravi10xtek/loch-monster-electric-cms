@@ -1,4 +1,5 @@
 import { postgresAdapter } from '@payloadcms/db-postgres'
+import { migrations } from './migrations'
 import { lexicalEditor, UploadFeature } from '@payloadcms/richtext-lexical'
 import path from 'path'
 import { buildConfig } from 'payload'
@@ -123,8 +124,12 @@ export default buildConfig({
   db: postgresAdapter({
     pool: {
       connectionString: process.env.DATABASE_URI || '',
-      max: 10,
+      // Serverless: keep pool small to avoid exhausting Supabase connection limits
+      max: process.env.VERCEL ? 1 : 10,
+      idleTimeoutMillis: 30000,
+      connectionTimeoutMillis: 10000,
     },
+    prodMigrations: migrations,
   }),
 
   sharp,

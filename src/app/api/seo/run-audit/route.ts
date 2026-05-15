@@ -5,6 +5,9 @@ import config from '@payload-config'
 const PSI_API = 'https://www.googleapis.com/pagespeedonline/v5/runPagespeed'
 const CATEGORIES = ['seo', 'performance', 'accessibility', 'best-practices']
 
+type IssueCategory = 'seo' | 'performance' | 'accessibility' | 'best-practices'
+type IssueSeverity = 'error' | 'warning' | 'info'
+
 type AuditResult = {
   url: string
   pageName: string
@@ -12,7 +15,7 @@ type AuditResult = {
   performanceScore: number
   accessibilityScore: number
   bestPracticesScore: number
-  issues: { category: string; id: string; title: string; description: string; severity: string }[]
+  issues: { category: IssueCategory; id: string; title: string; description: string; severity: IssueSeverity }[]
 }
 
 async function auditWithPSI(url: string, apiKey: string): Promise<AuditResult> {
@@ -39,14 +42,15 @@ async function auditWithPSI(url: string, apiKey: string): Promise<AuditResult> {
     const auditRef = Object.entries<any>(lhr.categories ?? {}).find(([, cat]) =>
       cat.auditRefs?.some((r: any) => r.id === id),
     )
-    const category = auditRef ? auditRef[0] : 'seo'
+    const category = (auditRef ? auditRef[0] : 'seo') as IssueCategory
+    const issueSeverity = severity as IssueSeverity
 
     issues.push({
       category,
       id,
       title: audit.title ?? id,
       description: (audit.description ?? '').replace(/\[.*?\]\(.*?\)/g, '').trim(),
-      severity,
+      severity: issueSeverity,
     })
   }
 
