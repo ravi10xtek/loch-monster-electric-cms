@@ -6,10 +6,10 @@ export const dynamic = 'force-dynamic'
 
 export async function GET() {
   const hasUri = Boolean(
-    process.env.DATABASE_URI ||
+    process.env.DATABASE_PASSWORD ||
+      process.env.DATABASE_URI ||
       process.env.DATABASE_URL ||
-      process.env.POSTGRES_URL ||
-      process.env.DATABASE_PASSWORD,
+      process.env.POSTGRES_URL,
   )
 
   try {

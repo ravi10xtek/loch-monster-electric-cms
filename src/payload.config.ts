@@ -29,26 +29,43 @@ import { SEOSettings } from './globals/SEOSettings'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
-function getDatabaseUri(): string {
-  const fromEnv =
-    process.env.DATABASE_URI || process.env.DATABASE_URL || process.env.POSTGRES_URL
-  if (fromEnv) return fromEnv
+const supabaseSsl = { rejectUnauthorized: false }
 
+function getPoolConfig() {
   const password = process.env.DATABASE_PASSWORD
   const ref = process.env.SUPABASE_PROJECT_REF || 'qvmccwbxnwacedtckfkp'
   const host =
     process.env.SUPABASE_POOLER_HOST || 'aws-1-us-east-1.pooler.supabase.com'
 
-  if (password) {
-    return `postgresql://postgres.${ref}:${encodeURIComponent(password)}@${host}:6543/postgres`
+  const base = {
+    max: process.env.VERCEL ? 1 : 10,
+    idleTimeoutMillis: 30000,
+    connectionTimeoutMillis: 10000,
+    ssl: supabaseSsl,
   }
 
-  return ''
-}
+  // Prefer discrete fields — connectionString can override ssl on Vercel/node-pg
+  if (password) {
+    return {
+      ...base,
+      host,
+      port: 6543,
+      user: `postgres.${ref}`,
+      password,
+      database: 'postgres',
+    }
+  }
 
-const databaseUri = getDatabaseUri()
-const useSupabaseSsl =
-  databaseUri.includes('supabase.com') || process.env.NODE_ENV === 'production'
+  const connectionString =
+    process.env.DATABASE_URI || process.env.DATABASE_URL || process.env.POSTGRES_URL || ''
+
+  if (!connectionString) return { ...base, connectionString: '' }
+
+  return {
+    ...base,
+    connectionString,
+  }
+}
 
 export default buildConfig({
   serverURL: process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3001',
@@ -142,13 +159,7 @@ export default buildConfig({
   },
 
   db: postgresAdapter({
-    pool: {
-      connectionString: databaseUri,
-      max: process.env.VERCEL ? 1 : 10,
-      idleTimeoutMillis: 30000,
-      connectionTimeoutMillis: 10000,
-      ssl: useSupabaseSsl ? { rejectUnauthorized: false } : undefined,
-    },
+    pool: getPoolConfig(),
   }),
 
   sharp,
