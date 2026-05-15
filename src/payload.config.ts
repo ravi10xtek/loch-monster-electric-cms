@@ -1,5 +1,4 @@
 import { postgresAdapter } from '@payloadcms/db-postgres'
-import { migrations } from './migrations'
 import { lexicalEditor, UploadFeature } from '@payloadcms/richtext-lexical'
 import path from 'path'
 import { buildConfig } from 'payload'
@@ -129,7 +128,6 @@ export default buildConfig({
       idleTimeoutMillis: 30000,
       connectionTimeoutMillis: 10000,
     },
-    prodMigrations: migrations,
   }),
 
   sharp,
