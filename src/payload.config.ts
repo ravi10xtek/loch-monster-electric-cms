@@ -37,11 +37,13 @@ function getPoolConfig() {
   const host =
     process.env.SUPABASE_POOLER_HOST || 'aws-1-us-east-1.pooler.supabase.com'
 
+  const needsSsl = Boolean(process.env.VERCEL || process.env.NODE_ENV === 'production')
+
   const base = {
     max: process.env.VERCEL ? 1 : 10,
     idleTimeoutMillis: 30000,
     connectionTimeoutMillis: 10000,
-    ssl: supabaseSsl,
+    ...(needsSsl ? { ssl: supabaseSsl } : {}),
   }
 
   // Prefer discrete fields — connectionString can override ssl on Vercel/node-pg
