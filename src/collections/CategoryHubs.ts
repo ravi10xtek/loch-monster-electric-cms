@@ -19,6 +19,15 @@ export const CategoryHubs: CollectionConfig = {
   fields: [
     { name: 'title', type: 'text', required: true },
     {
+      name: 'cardImage',
+      type: 'upload',
+      relationTo: 'media',
+      label: 'Tab Card Image',
+      admin: {
+        description: 'Image shown on the "Our Electrical Services" tab card (homepage + service detail pages). Landscape crop recommended.',
+      },
+    },
+    {
       name: 'slug',
       type: 'text',
       required: true,
