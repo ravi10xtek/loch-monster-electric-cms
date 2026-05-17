@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { revalidate } from '../lib/revalidate'
 
 export const Media: CollectionConfig = {
   slug: 'media',
@@ -26,6 +27,15 @@ export const Media: CollectionConfig = {
           args.req.file.name = ext ? `${sanitized}.${ext}` : sanitized
         }
         return args
+      },
+    ],
+    afterChange: [
+      // When a media file is replaced or its alt/caption changes, the
+      // collections that reference it don't fire their own afterChange.
+      // We don't know which docs reference this media, so we tell the
+      // website to revalidate broadly via a 'media' collection signal.
+      async () => {
+        await revalidate({ collection: 'media' as never })
       },
     ],
   },
