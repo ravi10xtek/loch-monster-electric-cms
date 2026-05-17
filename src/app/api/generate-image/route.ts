@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
     // Call OpenAI Responses API with image_generation tool
     const openai = new OpenAI({ apiKey })
     const response = await openai.responses.create({
-      model: 'gpt-5.5',
+      model: 'gpt-5.4-mini',
       input: prompt,
       tools: [{ type: 'image_generation' }],
     })
