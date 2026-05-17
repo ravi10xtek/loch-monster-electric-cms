@@ -87,7 +87,14 @@ export const ServiceHubs: CollectionConfig = {
                 { name: 'href', type: 'text', label: 'Card Link URL' },
                 { name: 'color', type: 'text', defaultValue: '#2a2a2a' },
                 { name: 'gradient', type: 'text', defaultValue: 'linear-gradient(160deg,#191919,#333)' },
-                { name: 'image', type: 'upload', relationTo: 'media', label: 'Card Photo' },
+                {
+                  name: 'image', type: 'upload', relationTo: 'media', label: 'Card Photo',
+                  admin: {
+                    components: {
+                      afterInput: ['@/components/GenerateImageButton#GenerateImageButton'],
+                    },
+                  },
+                },
               ],
             },
           ],

@@ -92,7 +92,14 @@ export const CategoryHubs: CollectionConfig = {
             { name: 'readMoreHref', type: 'text', label: 'Read More URL' },
             { name: 'color', type: 'text', defaultValue: '#1a1a1a' },
             { name: 'gradient', type: 'text', defaultValue: 'linear-gradient(160deg,#111,#2a2a2a)' },
-            { name: 'image', type: 'upload', relationTo: 'media', label: 'Section Photo' },
+            {
+              name: 'image', type: 'upload', relationTo: 'media', label: 'Section Photo',
+              admin: {
+                components: {
+                  afterInput: ['@/components/GenerateImageButton#GenerateImageButton'],
+                },
+              },
+            },
           ],
         },
       ],
