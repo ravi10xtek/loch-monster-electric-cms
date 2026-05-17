@@ -297,6 +297,9 @@ export const Posts: CollectionConfig = {
               relationTo: 'media',
               admin: {
                 description: 'Hero image for the post. Overrides the gradient cover when set.',
+                components: {
+                  afterInput: ['@/components/GenerateImageButton#GenerateImageButton'],
+                },
               },
             },
             {

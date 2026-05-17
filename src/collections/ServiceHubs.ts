@@ -44,7 +44,17 @@ export const ServiceHubs: CollectionConfig = {
         { name: 'heroTagline', type: 'text' },
         { name: 'heroBody', type: 'textarea', label: 'Body Paragraph 1' },
         { name: 'heroBody2', type: 'textarea', label: 'Body Paragraph 2 (optional)' },
-        { name: 'heroImage', type: 'upload', relationTo: 'media', label: 'Hero Background Image' },
+        {
+          name: 'heroImage',
+          type: 'upload',
+          relationTo: 'media',
+          label: 'Hero Background Image',
+          admin: {
+            components: {
+              afterInput: ['@/components/GenerateImageButton#GenerateImageButton'],
+            },
+          },
+        },
       ],
     },
     // ── What We Handle Section ─────────────────────────────────

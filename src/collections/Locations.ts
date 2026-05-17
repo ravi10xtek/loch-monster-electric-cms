@@ -55,7 +55,17 @@ export const Locations: CollectionConfig = {
               required: true,
               admin: { description: 'Shown in the "Your Local X Electrician" section below the hero.' },
             },
-            { name: 'heroImage', type: 'upload', relationTo: 'media', label: 'Hero Background Image' },
+            {
+              name: 'heroImage',
+              type: 'upload',
+              relationTo: 'media',
+              label: 'Hero Background Image',
+              admin: {
+                components: {
+                  afterInput: ['@/components/GenerateImageButton#GenerateImageButton'],
+                },
+              },
+            },
             { name: 'cityImage', type: 'upload', relationTo: 'media', label: 'City Photo (shown in local section)' },
             {
               name: 'nearby',

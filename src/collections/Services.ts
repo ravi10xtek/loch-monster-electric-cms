@@ -91,7 +91,17 @@ export const Services: CollectionConfig = {
             },
             { name: 'heroTagline', type: 'text', label: 'Hero Tagline' },
             { name: 'heroBody', type: 'textarea', label: 'Hero Body' },
-            { name: 'heroImage', type: 'upload', relationTo: 'media', label: 'Hero Background Image' },
+            {
+              name: 'heroImage',
+              type: 'upload',
+              relationTo: 'media',
+              label: 'Hero Background Image',
+              admin: {
+                components: {
+                  afterInput: ['@/components/GenerateImageButton#GenerateImageButton'],
+                },
+              },
+            },
             // When Do You Need section
             {
               name: 'whenHeading',
@@ -114,7 +124,17 @@ export const Services: CollectionConfig = {
               label: 'When Section Fallback Color',
               admin: { description: 'Hex fallback, e.g. #1a1a1a' },
             },
-            { name: 'whenImage', type: 'upload', relationTo: 'media', label: 'When Section Photo' },
+            {
+              name: 'whenImage',
+              type: 'upload',
+              relationTo: 'media',
+              label: 'When Section Photo',
+              admin: {
+                components: {
+                  afterInput: ['@/components/GenerateImageButton#GenerateImageButton'],
+                },
+              },
+            },
             {
               name: 'scenarios',
               type: 'array',

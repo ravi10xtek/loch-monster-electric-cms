@@ -25,6 +25,9 @@ export const CategoryHubs: CollectionConfig = {
       label: 'Tab Card Image',
       admin: {
         description: 'Image shown on the "Our Electrical Services" tab card (homepage + service detail pages). Landscape crop recommended.',
+        components: {
+          afterInput: ['@/components/GenerateImageButton#GenerateImageButton'],
+        },
       },
     },
     {
@@ -59,7 +62,17 @@ export const CategoryHubs: CollectionConfig = {
         { name: 'heroTagline', type: 'text' },
         { name: 'heroBody', type: 'textarea' },
         { name: 'heroBody2', type: 'textarea', label: 'Hero Body (2nd paragraph)' },
-        { name: 'heroImage', type: 'upload', relationTo: 'media', label: 'Hero Background Image' },
+        {
+          name: 'heroImage',
+          type: 'upload',
+          relationTo: 'media',
+          label: 'Hero Background Image',
+          admin: {
+            components: {
+              afterInput: ['@/components/GenerateImageButton#GenerateImageButton'],
+            },
+          },
+        },
       ],
     },
     // ── Sub-Service Sections ───────────────────────────────────
