@@ -32,27 +32,23 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    // Call DALL-E 3
+    // Call OpenAI Responses API with image_generation tool
     const openai = new OpenAI({ apiKey })
-    const imageResponse = await openai.images.generate({
-      model: 'dall-e-3',
-      prompt,
-      size: '1792x1024',
-      quality: 'standard',
-      n: 1,
+    const response = await openai.responses.create({
+      model: 'gpt-4.1-mini',
+      input: prompt,
+      tools: [{ type: 'image_generation' }],
     })
 
-    const imageUrl = imageResponse.data?.[0]?.url
-    if (!imageUrl) {
-      return NextResponse.json({ error: 'No image URL returned from DALL-E' }, { status: 500 })
+    const b64 = response.output
+      .filter((o: any) => o.type === 'image_generation_call')
+      .map((o: any) => o.result)[0]
+
+    if (!b64) {
+      return NextResponse.json({ error: 'No image data returned from OpenAI' }, { status: 500 })
     }
 
-    // Fetch the image buffer
-    const imageRes = await fetch(imageUrl)
-    if (!imageRes.ok) {
-      return NextResponse.json({ error: 'Failed to download generated image' }, { status: 500 })
-    }
-    const imageBuffer = await imageRes.arrayBuffer()
+    const imageBuffer = Buffer.from(b64, 'base64')
 
     // Upload to Payload media collection
     const payload = await getPayload({ config })
