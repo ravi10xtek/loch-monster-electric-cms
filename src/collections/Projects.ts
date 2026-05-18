@@ -10,7 +10,7 @@ export const Projects: CollectionConfig = {
   },
   access: { read: () => true },
   hooks: {
-    afterChange: [async () => { await revalidate({ collection: 'projects' as never }) }],
+    afterChange: [async () => { await revalidate({ collection: 'projects' }) }],
   },
   fields: [
     { name: 'title', type: 'text', required: true },
