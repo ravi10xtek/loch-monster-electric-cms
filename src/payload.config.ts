@@ -19,6 +19,7 @@ import { ServiceHubs } from './collections/ServiceHubs'
 import { CategoryHubs } from './collections/CategoryHubs'
 import { SEOAudits } from './collections/SEOAudits'
 import { Competitors } from './collections/Competitors'
+import { Projects } from './collections/Projects'
 import { HomePage } from './globals/HomePage'
 import { AboutPage } from './globals/AboutPage'
 import { ContactPage } from './globals/ContactPage'
@@ -112,7 +113,7 @@ export default buildConfig({
     },
   },
 
-  collections: [Posts, Media, PageSEO, Users, Locations, Services, Pages, ContactSubmissions, FAQs, ServiceHubs, CategoryHubs, SEOAudits, Competitors],
+  collections: [Posts, Media, PageSEO, Users, Locations, Services, Pages, ContactSubmissions, FAQs, ServiceHubs, CategoryHubs, SEOAudits, Competitors, Projects],
 
   globals: [HomePage, AboutPage, ContactPage, PricingPage, ServiceAreasPage, SharedSections, SEOSettings],
 
