@@ -105,7 +105,7 @@ export default buildConfig({
         }
         return site
       },
-      globals: ['home-page', 'about-page', 'contact-page', 'pricing-page', 'service-areas-page', 'shared-sections'],
+      globals: ['home-page', 'about-page', 'contact-page', 'pricing-page', 'service-areas-page', 'shared-sections', 'media-page'],
       collections: ['service-hubs', 'category-hubs'],
       breakpoints: [
         { label: 'Mobile', name: 'mobile', width: 375, height: 667 },
