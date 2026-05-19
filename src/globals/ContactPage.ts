@@ -12,11 +12,11 @@ export const ContactPage: GlobalConfig = {
   fields: [
     // ── Hero ─────────────────────────────────────────────────────
     {
-      type: 'collapsible',
-      label: 'Hero Section',
-      fields: [
-        { name: 'heroImage', type: 'upload', relationTo: 'media', label: 'Hero Background Image' },
-      ],
+      name: 'heroImage',
+      type: 'upload',
+      relationTo: 'media',
+      label: 'Hero Background Image',
+      admin: { components: { afterInput: ['@/components/GenerateImageButton#GenerateImageButton'] } },
     },
     { name: 'heading', type: 'text', label: 'Main Heading', defaultValue: "LET'S TALK" },
     {
