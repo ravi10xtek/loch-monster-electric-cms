@@ -16,6 +16,7 @@ interface RevalidatePayload {
     | 'posts' | 'locations' | 'services' | 'page-seo' | 'pages' | 'faqs'
     | 'service-hubs' | 'category-hubs'
     | 'projects' | 'social-posts'
+    | 'global-media-page'
     | 'global-home-page' | 'global-about-page' | 'global-contact-page'
     | 'global-pricing-page' | 'global-service-areas-page' | 'global-shared-sections'
   slug?: string

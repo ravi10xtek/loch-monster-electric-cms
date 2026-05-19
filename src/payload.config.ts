@@ -23,6 +23,7 @@ import { Projects } from './collections/Projects'
 import { SocialPosts } from './collections/SocialPosts'
 import { HomePage } from './globals/HomePage'
 import { AboutPage } from './globals/AboutPage'
+import { MediaPage } from './globals/MediaPage'
 import { ContactPage } from './globals/ContactPage'
 import { PricingPage } from './globals/PricingPage'
 import { ServiceAreasPage } from './globals/ServiceAreasPage'
@@ -116,7 +117,7 @@ export default buildConfig({
 
   collections: [Posts, Media, PageSEO, Users, Locations, Services, Pages, ContactSubmissions, FAQs, ServiceHubs, CategoryHubs, SEOAudits, Competitors, Projects, SocialPosts],
 
-  globals: [HomePage, AboutPage, ContactPage, PricingPage, ServiceAreasPage, SharedSections, SEOSettings],
+  globals: [HomePage, AboutPage, ContactPage, PricingPage, ServiceAreasPage, SharedSections, SEOSettings, MediaPage],
 
   editor: lexicalEditor({
     features: ({ defaultFeatures }) => [

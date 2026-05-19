@@ -19,6 +19,7 @@ export const Projects: CollectionConfig = {
       options: [
         { label: 'Residential', value: 'residential' },
         { label: 'Commercial', value: 'commercial' },
+        { label: 'HOA', value: 'hoa' },
         { label: 'Team & Events', value: 'team-events' },
       ],
     },
