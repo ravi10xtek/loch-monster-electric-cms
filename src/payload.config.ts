@@ -5,6 +5,7 @@ import path from 'path'
 import { buildConfig } from 'payload'
 import sharp from 'sharp'
 import { fileURLToPath } from 'url'
+import { migrations } from './migrations'
 
 import { Posts } from './collections/Posts'
 import { Media } from './collections/Media'
@@ -168,6 +169,11 @@ export default buildConfig({
 
   db: postgresAdapter({
     pool: getPoolConfig(),
+    // Disable dev-mode schema push — use explicit migrations instead.
+    // This prevents the "Pulling schema from database..." hang on dev startup.
+    push: false,
+    // Auto-apply pending migrations on production startup (Vercel).
+    prodMigrations: migrations,
   }),
 
   plugins: [
