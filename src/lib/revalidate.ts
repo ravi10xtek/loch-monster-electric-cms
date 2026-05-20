@@ -19,6 +19,7 @@ interface RevalidatePayload {
     | 'global-media-page'
     | 'global-home-page' | 'global-about-page' | 'global-contact-page'
     | 'global-pricing-page' | 'global-service-areas-page' | 'global-shared-sections'
+    | 'global-site-settings'
   slug?: string
 }
 
