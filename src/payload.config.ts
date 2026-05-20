@@ -30,6 +30,7 @@ import { ServiceAreasPage } from './globals/ServiceAreasPage'
 import { SharedSections } from './globals/SharedSections'
 import { SEOSettings } from './globals/SEOSettings'
 import { SiteSettings } from './globals/SiteSettings'
+import { Navigation } from './globals/Navigation'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -118,7 +119,7 @@ export default buildConfig({
 
   collections: [Posts, Media, PageSEO, Users, Locations, Services, Pages, ContactSubmissions, FAQs, ServiceHubs, CategoryHubs, SEOAudits, Competitors, Projects, SocialPosts],
 
-  globals: [HomePage, AboutPage, ContactPage, PricingPage, ServiceAreasPage, SharedSections, SEOSettings, MediaPage, SiteSettings],
+  globals: [HomePage, AboutPage, ContactPage, PricingPage, ServiceAreasPage, SharedSections, SEOSettings, MediaPage, SiteSettings, Navigation],
 
   editor: lexicalEditor({
     features: ({ defaultFeatures }) => [
