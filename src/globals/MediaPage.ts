@@ -22,6 +22,7 @@ export const MediaPage: GlobalConfig = {
     },
     { name: 'heroTagline', type: 'text', label: 'Tagline' },
     { name: 'heroBody', type: 'textarea', label: 'Body Text' },
+    { name: 'heroBody2', type: 'textarea', label: 'Body Text (2nd paragraph)' },
     { name: 'heroCta1Label', type: 'text', label: 'CTA 1 Label', defaultValue: 'VIEW PROJECTS' },
     { name: 'heroCta1Href', type: 'text', label: 'CTA 1 URL', defaultValue: '#projects' },
     { name: 'heroCta2Label', type: 'text', label: 'CTA 2 Label', defaultValue: 'FOLLOW US' },

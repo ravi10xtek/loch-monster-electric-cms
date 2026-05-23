@@ -91,6 +91,7 @@ export const Services: CollectionConfig = {
             },
             { name: 'heroTagline', type: 'text', label: 'Hero Tagline' },
             { name: 'heroBody', type: 'textarea', label: 'Hero Body' },
+            { name: 'heroBody2', type: 'textarea', label: 'Hero Body (2nd paragraph)' },
             {
               name: 'heroImage',
               type: 'upload',
