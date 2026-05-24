@@ -80,23 +80,26 @@ function getPoolConfig() {
 
 const SITE_URL = process.env.LME_SITE_URL || 'http://localhost:3000'
 
+// All origins the site might be served from — custom domain, Vercel project URL,
+// and local dev. Live preview + client-side fetches will fail with a CORS error
+// unless every origin is listed here.
+const SITE_ORIGINS = [
+  SITE_URL,
+  'http://localhost:3000',
+  'https://lochmonsterelectric.com',
+  'https://www.lochmonsterelectric.com',
+  'https://loch-monster-electric.vercel.app',
+].filter(Boolean)
+
 export default buildConfig({
   serverURL: process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3001',
 
   // Allow the site (iframe) to post messages to the CMS and vice-versa
   cors: {
-    origins: [
-      SITE_URL,
-      'http://localhost:3000',
-      'https://lochmonsterelectric.com',
-    ].filter(Boolean),
+    origins: SITE_ORIGINS,
   },
 
-  csrf: [
-    SITE_URL,
-    'http://localhost:3000',
-    'https://lochmonsterelectric.com',
-  ].filter(Boolean),
+  csrf: SITE_ORIGINS,
 
   admin: {
     user: Users.slug,
