@@ -71,5 +71,12 @@ export const PageSEO: CollectionConfig = {
         description: 'Check to add noindex,nofollow (e.g. thank-you pages).',
       },
     },
+    {
+      name: 'schemaMarkup',
+      type: 'json',
+      admin: {
+        description: 'JSON-LD structured data injected as <script type="application/ld+json">. Paste a valid Schema.org object (e.g. LocalBusiness, Service, FAQPage). Must be valid JSON.',
+      },
+    },
   ],
 }
