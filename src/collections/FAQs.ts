@@ -4,7 +4,7 @@ import { revalidate } from '../lib/revalidate'
 export const FAQs: CollectionConfig = {
   slug: 'faqs',
   admin: {
-    group: 'Forms & Content',
+    group: 'Content',
     useAsTitle: 'question',
     defaultColumns: ['question', 'tags', 'sortOrder'],
     description: 'Site-wide FAQ items. Tag each question to control which pages it appears on.',

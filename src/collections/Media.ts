@@ -4,7 +4,7 @@ import { revalidate } from '../lib/revalidate'
 export const Media: CollectionConfig = {
   slug: 'media',
   admin: {
-    group: 'SEO & Settings',
+    group: 'Admin',
     useAsTitle: 'alt',
     defaultColumns: ['filename', 'alt', 'mimeType', 'createdAt'],
     description: 'Name files descriptively before uploading, e.g. "panel-upgrade-minneapolis.jpg" not "IMG_3847.jpg".',

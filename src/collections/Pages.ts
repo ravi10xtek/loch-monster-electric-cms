@@ -66,7 +66,7 @@ const pageConverters: HTMLConverter<any>[] = [
 export const Pages: CollectionConfig = {
   slug: 'pages',
   admin: {
-    group: 'Pages',
+    group: 'Admin',
     useAsTitle: 'title',
     defaultColumns: ['title', 'slug', 'updatedAt'],
     description: 'Block-based pages. Each page is a slug + an ordered list of blocks.',

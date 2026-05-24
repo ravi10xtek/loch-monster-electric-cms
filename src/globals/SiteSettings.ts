@@ -5,7 +5,7 @@ export const SiteSettings: GlobalConfig = {
   slug: 'site-settings',
   label: 'Site Settings',
   admin: {
-    group: 'Settings',
+    group: 'Site Config',
     description: 'Contact info, social media links, business hours and license numbers shown in the header and footer.',
   },
   access: { read: () => true },

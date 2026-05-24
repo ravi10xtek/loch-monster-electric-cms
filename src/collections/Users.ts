@@ -3,7 +3,7 @@ import type { CollectionConfig } from 'payload'
 export const Users: CollectionConfig = {
   slug: 'users',
   admin: {
-    group: 'SEO & Settings',
+    group: 'Admin',
     useAsTitle: 'email',
     defaultColumns: ['name', 'email', 'role'],
     description: 'CMS admin users.',

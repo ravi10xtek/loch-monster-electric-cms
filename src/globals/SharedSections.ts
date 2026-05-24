@@ -4,7 +4,7 @@ import { revalidate } from '../lib/revalidate'
 export const SharedSections: GlobalConfig = {
   slug: 'shared-sections',
   label: 'Shared Sections',
-  admin: { group: 'Pages' },
+  admin: { group: 'Site Config' },
   access: { read: () => true },
   hooks: {
     afterChange: [async () => { await revalidate({ collection: 'global-shared-sections' }) }],

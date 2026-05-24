@@ -5,7 +5,7 @@ export const Navigation: GlobalConfig = {
   slug: 'navigation',
   label: 'Navigation',
   admin: {
-    group: 'Settings',
+    group: 'Site Config',
     description: 'Edit the site nav bar: top-level links, service mega menus, and mobile menu.',
   },
   access: { read: () => true },

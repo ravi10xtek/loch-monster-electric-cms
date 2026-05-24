@@ -3,7 +3,7 @@ import type { CollectionConfig } from 'payload'
 export const ContactSubmissions: CollectionConfig = {
   slug: 'contact-submissions',
   admin: {
-    group: 'Forms & Content',
+    group: 'Admin',
     useAsTitle: 'name',
     defaultColumns: ['name', 'phone', 'email', 'createdAt'],
     description: 'Contact form submissions from the website.',
