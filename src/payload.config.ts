@@ -95,10 +95,9 @@ export default buildConfig({
   serverURL: process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3001',
 
   // Allow the site (iframe) to post messages to the CMS and vice-versa
-  cors: {
-    origins: SITE_ORIGINS,
-    headers: ['Content-Type', 'Authorization', 'Cookie', 'X-Payload-HTTP-Method-Override'],
-  },
+  // Use array shorthand — the object form { origins, headers } was being
+  // silently ignored on Vercel (no Access-Control-Allow-Origin in responses)
+  cors: SITE_ORIGINS,
 
   csrf: SITE_ORIGINS,
 
