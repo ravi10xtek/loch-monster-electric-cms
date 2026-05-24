@@ -78,8 +78,25 @@ function getPoolConfig() {
   }
 }
 
+const SITE_URL = process.env.LME_SITE_URL || 'http://localhost:3000'
+
 export default buildConfig({
   serverURL: process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3001',
+
+  // Allow the site (iframe) to post messages to the CMS and vice-versa
+  cors: {
+    origins: [
+      SITE_URL,
+      'http://localhost:3000',
+      'https://lochmonsterelectric.com',
+    ].filter(Boolean),
+  },
+
+  csrf: [
+    SITE_URL,
+    'http://localhost:3000',
+    'https://lochmonsterelectric.com',
+  ].filter(Boolean),
 
   admin: {
     user: Users.slug,
