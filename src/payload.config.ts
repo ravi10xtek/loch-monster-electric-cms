@@ -97,6 +97,7 @@ export default buildConfig({
   // Allow the site (iframe) to post messages to the CMS and vice-versa
   cors: {
     origins: SITE_ORIGINS,
+    headers: ['Content-Type', 'Authorization', 'Cookie', 'X-Payload-HTTP-Method-Override'],
   },
 
   csrf: SITE_ORIGINS,
