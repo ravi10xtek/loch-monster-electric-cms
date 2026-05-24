@@ -48,6 +48,7 @@ export const SiteSettings: GlobalConfig = {
         { name: 'x', type: 'text', label: 'X (Twitter) URL', admin: { width: '20%', placeholder: 'https://x.com/...' } },
         { name: 'linkedin', type: 'text', label: 'LinkedIn URL', admin: { width: '20%', placeholder: 'https://linkedin.com/...' } },
         { name: 'tiktok', type: 'text', label: 'TikTok URL', admin: { width: '20%', placeholder: 'https://tiktok.com/...' } },
+        { name: 'youtube', type: 'text', label: 'YouTube URL', admin: { width: '20%', placeholder: 'https://youtube.com/@...' } },
       ],
     },
     // ── Footer ────────────────────────────────────────────────────────────────
