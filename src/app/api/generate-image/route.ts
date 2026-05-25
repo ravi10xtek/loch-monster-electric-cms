@@ -4,6 +4,10 @@ import config from '@payload-config'
 import OpenAI from 'openai'
 
 export const dynamic = 'force-dynamic'
+// Give the route enough time to finish OpenAI generation + S3 upload
+// before Vercel kills it. Without this, the function can be terminated
+// mid-write and leave DB connections in a stuck state.
+export const maxDuration = 60
 
 export async function POST(req: NextRequest) {
   // Validate API key
