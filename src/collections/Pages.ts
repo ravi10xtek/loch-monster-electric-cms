@@ -103,7 +103,7 @@ export const Pages: CollectionConfig = {
     ],
     afterChange: [
       async ({ doc }) => {
-        await revalidate({ collection: 'pages', slug: doc.slug })
+        revalidate({ collection: 'pages', slug: doc.slug })
       },
     ],
   },

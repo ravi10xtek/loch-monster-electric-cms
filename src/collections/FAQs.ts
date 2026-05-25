@@ -13,7 +13,7 @@ export const FAQs: CollectionConfig = {
   hooks: {
     afterChange: [
       async () => {
-        await revalidate({ collection: 'faqs', slug: '' })
+        revalidate({ collection: 'faqs', slug: '' })
       },
     ],
   },

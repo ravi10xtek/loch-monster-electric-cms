@@ -13,7 +13,7 @@ export const ServiceHubs: CollectionConfig = {
   access: { read: () => true },
   hooks: {
     afterChange: [
-      async ({ doc }) => { await revalidate({ collection: 'pages', slug: doc.slug }) },
+      async ({ doc }) => { revalidate({ collection: 'pages', slug: doc.slug }) },
     ],
   },
   fields: [

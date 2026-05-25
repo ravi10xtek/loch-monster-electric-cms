@@ -18,7 +18,7 @@ export const Services: CollectionConfig = {
     afterChange: [
       async ({ doc }) => {
         // Revalidate by tag — services live at nested paths we don't track here
-        await revalidate({ collection: 'services', slug: doc.slug })
+        revalidate({ collection: 'services', slug: doc.slug })
       },
     ],
   },

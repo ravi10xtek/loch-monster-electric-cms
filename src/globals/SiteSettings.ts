@@ -10,7 +10,7 @@ export const SiteSettings: GlobalConfig = {
   },
   access: { read: () => true },
   hooks: {
-    afterChange: [async () => { await revalidate({ collection: 'global-site-settings' }) }],
+    afterChange: [async () => { revalidate({ collection: 'global-site-settings' }) }],
   },
   fields: [
     // ── Contact ──────────────────────────────────────────────────────────────

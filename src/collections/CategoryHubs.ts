@@ -13,7 +13,7 @@ export const CategoryHubs: CollectionConfig = {
   access: { read: () => true },
   hooks: {
     afterChange: [
-      async ({ doc }) => { await revalidate({ collection: 'category-hubs', slug: doc.slug }) },
+      async ({ doc }) => { revalidate({ collection: 'category-hubs', slug: doc.slug }) },
     ],
   },
   fields: [

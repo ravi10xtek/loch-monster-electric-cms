@@ -10,7 +10,7 @@ export const Navigation: GlobalConfig = {
   },
   access: { read: () => true },
   hooks: {
-    afterChange: [async () => { await revalidate({ collection: 'global-navigation' }) }],
+    afterChange: [async () => { revalidate({ collection: 'global-navigation' }) }],
   },
   fields: [
     // ── Top navigation links ───────────────────────────────────────────────

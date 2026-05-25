@@ -7,7 +7,7 @@ export const ContactPage: GlobalConfig = {
   admin: { group: 'Pages' },
   access: { read: () => true },
   hooks: {
-    afterChange: [async () => { await revalidate({ collection: 'global-contact-page' }) }],
+    afterChange: [async () => { revalidate({ collection: 'global-contact-page' }) }],
   },
   fields: [
     // ── Hero ─────────────────────────────────────────────────────

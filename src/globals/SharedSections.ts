@@ -7,7 +7,7 @@ export const SharedSections: GlobalConfig = {
   admin: { group: 'Site Config' },
   access: { read: () => true },
   hooks: {
-    afterChange: [async () => { await revalidate({ collection: 'global-shared-sections' }) }],
+    afterChange: [async () => { revalidate({ collection: 'global-shared-sections' }) }],
   },
   fields: [
     {

@@ -18,7 +18,7 @@ export const PageSEO: CollectionConfig = {
     afterChange: [
       async ({ doc }) => {
         // Revalidate the specific page whose SEO was updated
-        await revalidate({ collection: 'page-seo', slug: doc.slug })
+        revalidate({ collection: 'page-seo', slug: doc.slug })
       },
     ],
   },

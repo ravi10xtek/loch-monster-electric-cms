@@ -184,7 +184,7 @@ export const Posts: CollectionConfig = {
     afterChange: [
       async ({ doc }) => {
         // Bust the ISR cache for this post and the journal index
-        await revalidate({ collection: 'posts', slug: doc.slug })
+        revalidate({ collection: 'posts', slug: doc.slug })
       },
     ],
   },

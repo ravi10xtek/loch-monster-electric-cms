@@ -7,7 +7,7 @@ export const ServiceAreasPage: GlobalConfig = {
   admin: { group: 'Pages' },
   access: { read: () => true },
   hooks: {
-    afterChange: [async () => { await revalidate({ collection: 'global-service-areas-page' }) }],
+    afterChange: [async () => { revalidate({ collection: 'global-service-areas-page' }) }],
   },
   fields: [
     // ── Hero ─────────────────────────────────────────────────────

@@ -7,7 +7,7 @@ export const HomePage: GlobalConfig = {
   admin: { group: 'Pages' },
   access: { read: () => true },
   hooks: {
-    afterChange: [async () => { await revalidate({ collection: 'global-home-page' }) }],
+    afterChange: [async () => { revalidate({ collection: 'global-home-page' }) }],
   },
   fields: [
     // ── Hero ─────────────────────────────────────────────────────

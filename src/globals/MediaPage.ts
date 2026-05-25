@@ -7,7 +7,7 @@ export const MediaPage: GlobalConfig = {
   admin: { group: 'Pages' },
   access: { read: () => true },
   hooks: {
-    afterChange: [async () => { await revalidate({ collection: 'global-media-page' }) }],
+    afterChange: [async () => { revalidate({ collection: 'global-media-page' }) }],
   },
   fields: [
     // ── Hero ─────────────────────────────────────────────────────

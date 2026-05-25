@@ -17,7 +17,7 @@ export const Locations: CollectionConfig = {
   hooks: {
     afterChange: [
       async ({ doc }) => {
-        await revalidate({ collection: 'locations', slug: doc.slug })
+        revalidate({ collection: 'locations', slug: doc.slug })
       },
     ],
   },

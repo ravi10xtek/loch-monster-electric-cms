@@ -35,7 +35,7 @@ export const Media: CollectionConfig = {
       // We don't know which docs reference this media, so we tell the
       // website to revalidate broadly via a 'media' collection signal.
       async () => {
-        await revalidate({ collection: 'media' as never })
+        revalidate({ collection: 'media' as never })
       },
     ],
   },

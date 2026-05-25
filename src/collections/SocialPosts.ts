@@ -10,7 +10,7 @@ export const SocialPosts: CollectionConfig = {
   },
   access: { read: () => true },
   hooks: {
-    afterChange: [async () => { await revalidate({ collection: 'social-posts' }) }],
+    afterChange: [async () => { revalidate({ collection: 'social-posts' }) }],
   },
   fields: [
     {
