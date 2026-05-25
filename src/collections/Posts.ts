@@ -151,6 +151,11 @@ export const Posts: CollectionConfig = {
       url: ({ data }) =>
         `${process.env.LME_SITE_URL || 'http://localhost:3000'}/preview/post/${data?.slug ?? ''}`,
     },
+    components: {
+      edit: {
+        beforeDocumentControls: ['@/components/AutoLinkButton#AutoLinkButton'],
+      },
+    },
   },
   access: {
     read: () => true,
@@ -397,17 +402,6 @@ export const Posts: CollectionConfig = {
           ],
         },
       ],
-    },
-    // ── Sidebar: auto-link button ──────────────────────
-    {
-      name: 'autoLinkButton',
-      type: 'ui',
-      admin: {
-        position: 'sidebar',
-        components: {
-          Field: '@/components/AutoLinkButton#AutoLinkButton',
-        },
-      },
     },
   ],
 }
