@@ -190,16 +190,6 @@ export const Posts: CollectionConfig = {
   },
 
   fields: [
-    // Auto-link button — rendered at top of edit page, outside the tabs
-    {
-      name: 'autoLinkButton',
-      type: 'ui',
-      admin: {
-        components: {
-          Field: '@/components/AutoLinkButton#AutoLinkButton',
-        },
-      },
-    },
     // ── Tabs ─────────────────────────────────────────────
     {
       type: 'tabs',
@@ -228,6 +218,9 @@ export const Posts: CollectionConfig = {
               required: true,
               admin: {
                 description: 'Short summary shown on journal index and sidebar cards.',
+                components: {
+                  afterInput: ['@/components/AutoLinkButton#AutoLinkButton'],
+                },
               },
             },
             {
