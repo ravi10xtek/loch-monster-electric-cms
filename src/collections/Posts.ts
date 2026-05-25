@@ -241,15 +241,6 @@ export const Posts: CollectionConfig = {
               label: 'Body',
             },
             {
-              name: 'autoLinkButton',
-              type: 'ui',
-              admin: {
-                components: {
-                  Field: '@/components/AutoLinkButton#AutoLinkButton',
-                },
-              },
-            },
-            {
               name: 'bodyHtml',
               type: 'textarea',
               admin: {
@@ -406,6 +397,17 @@ export const Posts: CollectionConfig = {
           ],
         },
       ],
+    },
+    // ── Sidebar: auto-link button ──────────────────────
+    {
+      name: 'autoLinkButton',
+      type: 'ui',
+      admin: {
+        position: 'sidebar',
+        components: {
+          Field: '@/components/AutoLinkButton#AutoLinkButton',
+        },
+      },
     },
   ],
 }
