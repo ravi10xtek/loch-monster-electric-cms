@@ -63,6 +63,16 @@ export const Media: CollectionConfig = {
         position: 'centre',
         formatOptions: { format: 'webp', options: { quality: 85 } },
       },
+      {
+        // Stays as PNG for social platform compatibility (Facebook, LinkedIn,
+        // iMessage, Slack — none of which reliably support WebP for OG images).
+        // 1200x630 is the standard OG image dimension.
+        name: 'og',
+        width: 1200,
+        height: 630,
+        position: 'centre',
+        formatOptions: { format: 'png' },
+      },
     ],
     formatOptions: {
       format: 'webp',
