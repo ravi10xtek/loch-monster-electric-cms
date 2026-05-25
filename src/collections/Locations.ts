@@ -118,6 +118,30 @@ export const Locations: CollectionConfig = {
               },
             },
             {
+              name: 'commonRepairs',
+              type: 'array',
+              label: 'Most Common Electrical Repairs',
+              maxRows: 5,
+              admin: {
+                description: 'Top 5 repair types most common in this city. Each links back to the matching service page. Leave empty to show a generic site-wide fallback list.',
+              },
+              fields: [
+                {
+                  name: 'service',
+                  type: 'relationship',
+                  relationTo: 'services',
+                  required: true,
+                  admin: { description: 'Pick the service page this repair links to.' },
+                },
+                {
+                  name: 'cityContext',
+                  type: 'textarea',
+                  required: true,
+                  admin: { description: '1–2 sentences of city-specific context. e.g. "Most Bloomington homes built before 1975 still have the original 100-amp panel."' },
+                },
+              ],
+            },
+            {
               name: 'neighborhoods',
               type: 'json',
               admin: {
