@@ -239,6 +239,11 @@ export const Posts: CollectionConfig = {
               type: 'richText',
               required: true,
               label: 'Body',
+              admin: {
+                components: {
+                  afterInput: ['@/components/AutoLinkButton#AutoLinkButton'],
+                },
+              },
             },
             {
               name: 'bodyHtml',
