@@ -27,8 +27,6 @@ export const MediaPage: GlobalConfig = {
     { name: 'heroCta1Href', type: 'text', label: 'CTA 1 URL', defaultValue: '#projects' },
     { name: 'heroCta2Label', type: 'text', label: 'CTA 2 Label', defaultValue: 'FOLLOW US' },
     { name: 'heroCta2Href', type: 'text', label: 'CTA 2 URL', defaultValue: '#stay-connected' },
-    { name: 'heroFormTitle', type: 'text', label: 'Form Heading', defaultValue: 'GET A FREE ESTIMATE' },
-    { name: 'heroFormSubtitle', type: 'text', label: 'Form Subtitle', defaultValue: 'Fast response. No obligation.' },
     {
       name: 'heroImage',
       type: 'upload',
