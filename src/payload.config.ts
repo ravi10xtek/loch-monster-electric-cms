@@ -208,7 +208,19 @@ export default buildConfig({
     s3Storage({
       enabled: Boolean(process.env.SUPABASE_S3_ACCESS_KEY_ID),
       collections: {
-        media: true,
+        media: {
+          // Bypass the Payload media proxy and store the direct Supabase
+          // public URL on each media doc. The proxy returns 404 on HEAD
+          // requests, which breaks OG image previews on Facebook, LinkedIn,
+          // WhatsApp, etc. (they check HEAD before fetching). Direct
+          // Supabase URLs handle HEAD properly.
+          disablePayloadAccessControl: true,
+          generateFileURL: ({ filename }) => {
+            const projectRef = process.env.SUPABASE_PROJECT_REF || 'qvmccwbxnwacedtckfkp'
+            const bucket = process.env.SUPABASE_STORAGE_BUCKET || 'media'
+            return `https://${projectRef}.supabase.co/storage/v1/object/public/${bucket}/${filename}`
+          },
+        },
       },
       bucket: process.env.SUPABASE_STORAGE_BUCKET || 'media',
       config: {
