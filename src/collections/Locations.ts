@@ -101,11 +101,6 @@ export const Locations: CollectionConfig = {
               admin: { description: 'Hero body paragraph. 1–2 sentences setting the local angle.' },
             },
             {
-              name: 'heroIntro2',
-              type: 'textarea',
-              admin: { description: 'Optional second hero paragraph. Shown below the first.' },
-            },
-            {
               name: 'housingProfile',
               type: 'textarea',
               admin: { description: 'Short paragraph about the city\'s housing stock and how it shapes electrical work.' },
