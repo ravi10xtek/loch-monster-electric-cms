@@ -73,7 +73,18 @@ export const PricingPage: GlobalConfig = {
             { name: 'headingOrange', type: 'text', label: 'Heading Orange Part' },
             { name: 'body', type: 'textarea', required: true },
             { name: 'payFor', type: 'text', label: 'Pay-For Label' },
-            { name: 'gradient', type: 'text', defaultValue: 'linear-gradient(160deg,#1a1a1a,#2e2e2e)' },
+            { name: 'gradient', type: 'text', defaultValue: 'linear-gradient(160deg,#1a1a1a,#2e2e2e)', admin: { description: 'Used as fallback if no image is uploaded.' } },
+            {
+              name: 'image',
+              type: 'upload',
+              relationTo: 'media',
+              label: 'Tier Image (overrides gradient)',
+              admin: {
+                components: {
+                  afterInput: ['@/components/GenerateImageButton#GenerateImageButton'],
+                },
+              },
+            },
             {
               name: 'bullets',
               type: 'array',
