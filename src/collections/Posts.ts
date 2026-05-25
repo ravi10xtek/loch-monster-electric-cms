@@ -151,11 +151,6 @@ export const Posts: CollectionConfig = {
       url: ({ data }) =>
         `${process.env.LME_SITE_URL || 'http://localhost:3000'}/preview/post/${data?.slug ?? ''}`,
     },
-    components: {
-      edit: {
-        beforeDocumentControls: ['@/components/AutoLinkButton#AutoLinkButton'],
-      },
-    },
   },
   access: {
     read: () => true,
@@ -195,6 +190,16 @@ export const Posts: CollectionConfig = {
   },
 
   fields: [
+    // Auto-link button — rendered at top of edit page, outside the tabs
+    {
+      name: 'autoLinkButton',
+      type: 'ui',
+      admin: {
+        components: {
+          Field: '@/components/AutoLinkButton#AutoLinkButton',
+        },
+      },
+    },
     // ── Tabs ─────────────────────────────────────────────
     {
       type: 'tabs',
