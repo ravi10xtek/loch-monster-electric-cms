@@ -49,10 +49,8 @@ function getPoolConfig() {
     // @payloadcms/db-postgres holds one pool client permanently as an
     // ECONNRESET sentinel and never releases it, so max must be > 1 or
     // every real query waits forever and hits connectionTimeoutMillis.
-    // On Vercel, keep max low (2) to avoid exhausting Supabase's 200-connection
-    // limit across concurrent serverless function invocations.
-    max: process.env.VERCEL ? 2 : 10,
-    idleTimeoutMillis: process.env.VERCEL ? 5000 : 30000,
+    max: process.env.VERCEL ? 5 : 10,
+    idleTimeoutMillis: 30000,
     connectionTimeoutMillis: 10000,
     ...(needsSsl ? { ssl: supabaseSsl } : {}),
   }

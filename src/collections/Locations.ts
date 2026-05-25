@@ -66,7 +66,17 @@ export const Locations: CollectionConfig = {
                 },
               },
             },
-            { name: 'cityImage', type: 'upload', relationTo: 'media', label: 'City Photo (shown in "Now Hire" section)' },
+            {
+              name: 'cityImage',
+              type: 'upload',
+              relationTo: 'media',
+              label: 'City Photo (shown in "Now Hire" section)',
+              admin: {
+                components: {
+                  afterInput: ['@/components/GenerateImageButton#GenerateImageButton'],
+                },
+              },
+            },
             {
               name: 'nearby',
               type: 'relationship',
